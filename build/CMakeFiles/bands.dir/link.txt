@@ -1,0 +1,1 @@
+/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/bands.dir/link.d CMakeFiles/bands.dir/apps/bands.cpp.o -o bands  libtb.a /usr/lib/gcc/x86_64-redhat-linux/16/libgomp.so /usr/lib64/libpthread.a
