@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtb.a CMakeFiles/tb.dir/src/model.cpp.o CMakeFiles/tb.dir/src/select_k.cpp.o CMakeFiles/tb.dir/src/dos.cpp.o
+/usr/bin/ranlib libtb.a

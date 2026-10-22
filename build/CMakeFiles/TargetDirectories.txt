@@ -1,6 +1,0 @@
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/tb.dir
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/bands.dir
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/tests.dir
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/test.dir
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/edit_cache.dir
-/home/juliuswillrich/programming/medium_practice_projects/graphene_tb/build/CMakeFiles/rebuild_cache.dir

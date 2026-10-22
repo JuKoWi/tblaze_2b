@@ -1,0 +1,6 @@
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/tb.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/bands.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/tests.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/test.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/edit_cache.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles/rebuild_cache.dir
