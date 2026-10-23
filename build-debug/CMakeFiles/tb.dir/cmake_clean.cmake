@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/tb.dir/src/dos.cpp.o.d"
   "CMakeFiles/tb.dir/src/model.cpp.o"
   "CMakeFiles/tb.dir/src/model.cpp.o.d"
+  "CMakeFiles/tb.dir/src/read_and_write.cpp.o"
+  "CMakeFiles/tb.dir/src/read_and_write.cpp.o.d"
   "CMakeFiles/tb.dir/src/select_k.cpp.o"
   "CMakeFiles/tb.dir/src/select_k.cpp.o.d"
   "libtb.a"

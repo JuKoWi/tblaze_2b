@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/dos.cpp" "CMakeFiles/tb.dir/src/dos.cpp.o" "gcc" "CMakeFiles/tb.dir/src/dos.cpp.o.d"
   "/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/model.cpp" "CMakeFiles/tb.dir/src/model.cpp.o" "gcc" "CMakeFiles/tb.dir/src/model.cpp.o.d"
+  "/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/read_and_write.cpp" "CMakeFiles/tb.dir/src/read_and_write.cpp.o" "gcc" "CMakeFiles/tb.dir/src/read_and_write.cpp.o.d"
   "/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/select_k.cpp" "CMakeFiles/tb.dir/src/select_k.cpp.o" "gcc" "CMakeFiles/tb.dir/src/select_k.cpp.o.d"
   )
 

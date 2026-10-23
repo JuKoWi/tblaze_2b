@@ -147,17 +147,17 @@ tb/fast:
 .PHONY : tb/fast
 
 #=============================================================================
-# Target rules for targets named bands
+# Target rules for targets named bands_along_path
 
 # Build rule for target.
-bands: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bands
-.PHONY : bands
+bands_along_path: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 bands_along_path
+.PHONY : bands_along_path
 
 # fast build rule for target.
-bands/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands.dir/build.make CMakeFiles/bands.dir/build
-.PHONY : bands/fast
+bands_along_path/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands_along_path.dir/build.make CMakeFiles/bands_along_path.dir/build
+.PHONY : bands_along_path/fast
 
 #=============================================================================
 # Target rules for targets named tests
@@ -172,29 +172,29 @@ tests/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
 .PHONY : tests/fast
 
-apps/bands.o: apps/bands.cpp.o
-.PHONY : apps/bands.o
+apps/bands_along_path.o: apps/bands_along_path.cpp.o
+.PHONY : apps/bands_along_path.o
 
 # target to build an object file
-apps/bands.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands.dir/build.make CMakeFiles/bands.dir/apps/bands.cpp.o
-.PHONY : apps/bands.cpp.o
+apps/bands_along_path.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands_along_path.dir/build.make CMakeFiles/bands_along_path.dir/apps/bands_along_path.cpp.o
+.PHONY : apps/bands_along_path.cpp.o
 
-apps/bands.i: apps/bands.cpp.i
-.PHONY : apps/bands.i
+apps/bands_along_path.i: apps/bands_along_path.cpp.i
+.PHONY : apps/bands_along_path.i
 
 # target to preprocess a source file
-apps/bands.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands.dir/build.make CMakeFiles/bands.dir/apps/bands.cpp.i
-.PHONY : apps/bands.cpp.i
+apps/bands_along_path.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands_along_path.dir/build.make CMakeFiles/bands_along_path.dir/apps/bands_along_path.cpp.i
+.PHONY : apps/bands_along_path.cpp.i
 
-apps/bands.s: apps/bands.cpp.s
-.PHONY : apps/bands.s
+apps/bands_along_path.s: apps/bands_along_path.cpp.s
+.PHONY : apps/bands_along_path.s
 
 # target to generate assembly for a file
-apps/bands.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands.dir/build.make CMakeFiles/bands.dir/apps/bands.cpp.s
-.PHONY : apps/bands.cpp.s
+apps/bands_along_path.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands_along_path.dir/build.make CMakeFiles/bands_along_path.dir/apps/bands_along_path.cpp.s
+.PHONY : apps/bands_along_path.cpp.s
 
 src/dos.o: src/dos.cpp.o
 .PHONY : src/dos.o
@@ -243,6 +243,30 @@ src/model.s: src/model.cpp.s
 src/model.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/model.cpp.s
 .PHONY : src/model.cpp.s
+
+src/read_and_write.o: src/read_and_write.cpp.o
+.PHONY : src/read_and_write.o
+
+# target to build an object file
+src/read_and_write.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/read_and_write.cpp.o
+.PHONY : src/read_and_write.cpp.o
+
+src/read_and_write.i: src/read_and_write.cpp.i
+.PHONY : src/read_and_write.i
+
+# target to preprocess a source file
+src/read_and_write.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/read_and_write.cpp.i
+.PHONY : src/read_and_write.cpp.i
+
+src/read_and_write.s: src/read_and_write.cpp.s
+.PHONY : src/read_and_write.s
+
+# target to generate assembly for a file
+src/read_and_write.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/read_and_write.cpp.s
+.PHONY : src/read_and_write.cpp.s
 
 src/select_k.o: src/select_k.cpp.o
 .PHONY : src/select_k.o
@@ -326,18 +350,21 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... bands"
+	@echo "... bands_along_path"
 	@echo "... tb"
 	@echo "... tests"
-	@echo "... apps/bands.o"
-	@echo "... apps/bands.i"
-	@echo "... apps/bands.s"
+	@echo "... apps/bands_along_path.o"
+	@echo "... apps/bands_along_path.i"
+	@echo "... apps/bands_along_path.s"
 	@echo "... src/dos.o"
 	@echo "... src/dos.i"
 	@echo "... src/dos.s"
 	@echo "... src/model.o"
 	@echo "... src/model.i"
 	@echo "... src/model.s"
+	@echo "... src/read_and_write.o"
+	@echo "... src/read_and_write.i"
+	@echo "... src/read_and_write.s"
 	@echo "... src/select_k.o"
 	@echo "... src/select_k.i"
 	@echo "... src/select_k.s"

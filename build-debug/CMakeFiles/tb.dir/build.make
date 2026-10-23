@@ -114,11 +114,26 @@ CMakeFiles/tb.dir/src/dos.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tb.dir/src/dos.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/dos.cpp -o CMakeFiles/tb.dir/src/dos.cpp.s
 
+CMakeFiles/tb.dir/src/read_and_write.cpp.o: CMakeFiles/tb.dir/flags.make
+CMakeFiles/tb.dir/src/read_and_write.cpp.o: /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/read_and_write.cpp
+CMakeFiles/tb.dir/src/read_and_write.cpp.o: CMakeFiles/tb.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/tb.dir/src/read_and_write.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tb.dir/src/read_and_write.cpp.o -MF CMakeFiles/tb.dir/src/read_and_write.cpp.o.d -o CMakeFiles/tb.dir/src/read_and_write.cpp.o -c /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/read_and_write.cpp
+
+CMakeFiles/tb.dir/src/read_and_write.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tb.dir/src/read_and_write.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/read_and_write.cpp > CMakeFiles/tb.dir/src/read_and_write.cpp.i
+
+CMakeFiles/tb.dir/src/read_and_write.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tb.dir/src/read_and_write.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/src/read_and_write.cpp -o CMakeFiles/tb.dir/src/read_and_write.cpp.s
+
 # Object files for target tb
 tb_OBJECTS = \
 "CMakeFiles/tb.dir/src/model.cpp.o" \
 "CMakeFiles/tb.dir/src/select_k.cpp.o" \
-"CMakeFiles/tb.dir/src/dos.cpp.o"
+"CMakeFiles/tb.dir/src/dos.cpp.o" \
+"CMakeFiles/tb.dir/src/read_and_write.cpp.o"
 
 # External object files for target tb
 tb_EXTERNAL_OBJECTS =
@@ -126,9 +141,10 @@ tb_EXTERNAL_OBJECTS =
 libtb.a: CMakeFiles/tb.dir/src/model.cpp.o
 libtb.a: CMakeFiles/tb.dir/src/select_k.cpp.o
 libtb.a: CMakeFiles/tb.dir/src/dos.cpp.o
+libtb.a: CMakeFiles/tb.dir/src/read_and_write.cpp.o
 libtb.a: CMakeFiles/tb.dir/build.make
 libtb.a: CMakeFiles/tb.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX static library libtb.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libtb.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/tb.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/tb.dir/link.txt --verbose=$(VERBOSE)
 

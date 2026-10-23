@@ -3,6 +3,7 @@
 
 using cplx = std::complex<double>;
 
+
 struct Hopping {
 	int i,j;
 	Eigen::Vector3i R;
@@ -19,7 +20,6 @@ class TightBindingModel{
 				hops_(hoppings),
 				tau_(positions)
 				{
-					dim_basis = norb();
                     B_ = A_.inverse().transpose()* 2 * std::numbers::pi; 
 				}
 
@@ -27,8 +27,8 @@ class TightBindingModel{
 			return static_cast<int>(tau_.size());
 		}
 
-		void hamiltonian(const Eigen::Vector3d& k, Eigen::MatrixXcd& H) const;
-		void velocity(const Eigen::Vector3d& k, int alpha, Eigen::MatrixXcd& dH) const;
+		Eigen::MatrixXcd get_Hk(const Eigen::Vector3d& k) const;
+		// void velocity(const Eigen::Vector3d& k, int alpha, Eigen::MatrixXcd& dH);
 		static TightBindingModel from_file(const std::string& path);
         Eigen::Matrix3d get_rec_lat(){return B_;};
 
@@ -39,3 +39,20 @@ class TightBindingModel{
 		int dim_basis {};
 		Eigen::Matrix3d B_ {}; // rec lattice vectors
 };
+
+struct Kpoint_Info{
+	Eigen::VectorXcd eigvals {};
+	Eigen::MatrixXcd S {};
+	Eigen::MatrixXcd H {};
+	Eigen::MatrixXcd C {};
+	std::vector<Eigen::MatrixXcd> r {};
+	std::vector<Eigen::MatrixXcd> v {};
+};
+
+std::vector<Eigen::VectorXd> calculate_bands(std::vector<Eigen::Vector3d> kfrac, TightBindingModel model);
+
+
+
+
+
+
