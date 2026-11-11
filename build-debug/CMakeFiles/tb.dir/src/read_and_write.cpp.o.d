@@ -439,4 +439,7 @@ CMakeFiles/tb.dir/src/read_and_write.cpp.o: \
  /usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h \
  /usr/include/eigen3/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
- /usr/include/c++/16/iostream
+ /usr/include/c++/16/iostream \
+ /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/include/tb/model.h \
+ /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/include/tb/read_and_write.h \
+ /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/include/tb/utils.h
