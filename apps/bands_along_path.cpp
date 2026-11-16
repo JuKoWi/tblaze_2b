@@ -8,8 +8,7 @@
 
 
 int main(){
-	auto grid {generate_mp_grid_frac(3,2,1)};
-	std::vector<Eigen::Vector3d> sympoints {{0.0, 0.0, 0.0}, {0.5, 0.0, 0.0}, {1.0/3.0, 1.0/3.0, 0.0}, {0.0, 0.0, 0.0}};
+	std::vector<Eigen::Vector3d> sympoints {{0.0, 0.0, 0.0}, {0.5, 0.0, 0.0}, {2.0/3.0, 1.0/3.0, 0.0}, {0.0, 0.0, 0.0}};
 	std::vector<int> ppseg {100, 100, 100};
 	auto path {generate_path_frac(sympoints, ppseg)};
 

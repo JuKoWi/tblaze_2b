@@ -65,12 +65,14 @@ CMAKE_BINARY_DIR = /home/juliuswillrich/programming/medium_practice_projects/tbl
 # The main recursive "all" target.
 all: CMakeFiles/tb.dir/all
 all: CMakeFiles/bands_along_path.dir/all
+all: CMakeFiles/dos_on_grid.dir/all
 all: CMakeFiles/tests.dir/all
 .PHONY : all
 
 # The main recursive "codegen" target.
 codegen: CMakeFiles/tb.dir/codegen
 codegen: CMakeFiles/bands_along_path.dir/codegen
+codegen: CMakeFiles/dos_on_grid.dir/codegen
 codegen: CMakeFiles/tests.dir/codegen
 .PHONY : codegen
 
@@ -81,6 +83,7 @@ preinstall:
 # The main recursive "clean" target.
 clean: CMakeFiles/tb.dir/clean
 clean: CMakeFiles/bands_along_path.dir/clean
+clean: CMakeFiles/dos_on_grid.dir/clean
 clean: CMakeFiles/tests.dir/clean
 .PHONY : clean
 
@@ -91,12 +94,12 @@ clean: CMakeFiles/tests.dir/clean
 CMakeFiles/tb.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=3,4,5,6,7 "Built target tb"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=5,6,7,8 "Built target tb"
 .PHONY : CMakeFiles/tb.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tb.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 4
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tb.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/tb.dir/rule
@@ -108,7 +111,7 @@ tb: CMakeFiles/tb.dir/rule
 # codegen rule for target.
 CMakeFiles/tb.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=3,4,5,6,7 "Finished codegen for target tb"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=5,6,7,8 "Finished codegen for target tb"
 .PHONY : CMakeFiles/tb.dir/codegen
 
 # clean rule for target.
@@ -128,7 +131,7 @@ CMakeFiles/bands_along_path.dir/all: CMakeFiles/tb.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/bands_along_path.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/bands_along_path.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/bands_along_path.dir/rule
@@ -149,18 +152,50 @@ CMakeFiles/bands_along_path.dir/clean:
 .PHONY : CMakeFiles/bands_along_path.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/dos_on_grid.dir
+
+# All Build rule for target.
+CMakeFiles/dos_on_grid.dir/all: CMakeFiles/tb.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=3,4 "Built target dos_on_grid"
+.PHONY : CMakeFiles/dos_on_grid.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/dos_on_grid.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 6
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/dos_on_grid.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/dos_on_grid.dir/rule
+
+# Convenience name for target.
+dos_on_grid: CMakeFiles/dos_on_grid.dir/rule
+.PHONY : dos_on_grid
+
+# codegen rule for target.
+CMakeFiles/dos_on_grid.dir/codegen:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/codegen
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=3,4 "Finished codegen for target dos_on_grid"
+.PHONY : CMakeFiles/dos_on_grid.dir/codegen
+
+# clean rule for target.
+CMakeFiles/dos_on_grid.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/clean
+.PHONY : CMakeFiles/dos_on_grid.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/tests.dir
 
 # All Build rule for target.
 CMakeFiles/tests.dir/all: CMakeFiles/tb.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=8,9,10 "Built target tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=9,10,11 "Built target tests"
 .PHONY : CMakeFiles/tests.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/tests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 7
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/tests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/tests.dir/rule
@@ -172,7 +207,7 @@ tests: CMakeFiles/tests.dir/rule
 # codegen rule for target.
 CMakeFiles/tests.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=8,9,10 "Finished codegen for target tests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-debug/CMakeFiles --progress-num=9,10,11 "Finished codegen for target tests"
 .PHONY : CMakeFiles/tests.dir/codegen
 
 # clean rule for target.

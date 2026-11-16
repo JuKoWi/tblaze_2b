@@ -18,12 +18,30 @@ void write_bands_path(std::vector<Eigen::Vector3d> kfrac, std::vector<Eigen::Vec
     }
     std::ofstream resultfile("bands.txt");
     if (resultfile.is_open()){
-        for (int i=0; i<kfrac.size(); i++){
+        for (std::size_t i=0; i<kfrac.size(); i++){
             resultfile << kfrac[i].transpose() << '\t' << eigvals_eV[i].transpose() << '\n';
         } 
         resultfile.close();
     }
     std::cout << "Finished writing bandfile" << '\n';
+}
+
+void write_dos(std::vector<double> E_au, std::vector<double> dos){
+    if (E_au.size() != dos.size()){
+        throw std::invalid_argument("Size of energy and DOS do not match");
+    }
+    std::vector<double> E_eV {};
+    for (auto v: E_au){
+        E_eV.push_back(v * Constants::HARTREE_TO_EV);
+    }
+    std::ofstream resultfile("dos.txt");
+    if (resultfile.is_open()){
+        for (std::size_t i=0; i<E_eV.size(); i++){
+            resultfile << E_eV[i] << '\t' << dos[i] << '\n';
+        } 
+        resultfile.close();
+    }
+    std::cout << "Finished writing DOS.txt " << '\n';
 }
 
 std::istringstream read_line(std::ifstream& infile){

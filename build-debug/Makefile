@@ -160,6 +160,19 @@ bands_along_path/fast:
 .PHONY : bands_along_path/fast
 
 #=============================================================================
+# Target rules for targets named dos_on_grid
+
+# Build rule for target.
+dos_on_grid: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 dos_on_grid
+.PHONY : dos_on_grid
+
+# fast build rule for target.
+dos_on_grid/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/build
+.PHONY : dos_on_grid/fast
+
+#=============================================================================
 # Target rules for targets named tests
 
 # Build rule for target.
@@ -196,29 +209,29 @@ apps/bands_along_path.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/bands_along_path.dir/build.make CMakeFiles/bands_along_path.dir/apps/bands_along_path.cpp.s
 .PHONY : apps/bands_along_path.cpp.s
 
-src/dos.o: src/dos.cpp.o
-.PHONY : src/dos.o
+apps/dos_on_grid.o: apps/dos_on_grid.cpp.o
+.PHONY : apps/dos_on_grid.o
 
 # target to build an object file
-src/dos.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/dos.cpp.o
-.PHONY : src/dos.cpp.o
+apps/dos_on_grid.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.o
+.PHONY : apps/dos_on_grid.cpp.o
 
-src/dos.i: src/dos.cpp.i
-.PHONY : src/dos.i
+apps/dos_on_grid.i: apps/dos_on_grid.cpp.i
+.PHONY : apps/dos_on_grid.i
 
 # target to preprocess a source file
-src/dos.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/dos.cpp.i
-.PHONY : src/dos.cpp.i
+apps/dos_on_grid.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.i
+.PHONY : apps/dos_on_grid.cpp.i
 
-src/dos.s: src/dos.cpp.s
-.PHONY : src/dos.s
+apps/dos_on_grid.s: apps/dos_on_grid.cpp.s
+.PHONY : apps/dos_on_grid.s
 
 # target to generate assembly for a file
-src/dos.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/tb.dir/build.make CMakeFiles/tb.dir/src/dos.cpp.s
-.PHONY : src/dos.cpp.s
+apps/dos_on_grid.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dos_on_grid.dir/build.make CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.s
+.PHONY : apps/dos_on_grid.cpp.s
 
 src/model.o: src/model.cpp.o
 .PHONY : src/model.o
@@ -351,14 +364,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... bands_along_path"
+	@echo "... dos_on_grid"
 	@echo "... tb"
 	@echo "... tests"
 	@echo "... apps/bands_along_path.o"
 	@echo "... apps/bands_along_path.i"
 	@echo "... apps/bands_along_path.s"
-	@echo "... src/dos.o"
-	@echo "... src/dos.i"
-	@echo "... src/dos.s"
+	@echo "... apps/dos_on_grid.o"
+	@echo "... apps/dos_on_grid.i"
+	@echo "... apps/dos_on_grid.s"
 	@echo "... src/model.o"
 	@echo "... src/model.i"
 	@echo "... src/model.s"

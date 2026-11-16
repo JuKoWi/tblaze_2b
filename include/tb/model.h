@@ -18,6 +18,8 @@ struct HoppingVec {
 	Eigen::Vector3cd t;
 };
 
+bool test_rec_lat(Eigen::Matrix3d lat, Eigen::Matrix3d rec_lat);
+
 class TightBindingModel{
 	public:
 		TightBindingModel(Eigen::Matrix3d lattice, std::vector<Hopping> hoppings): 
@@ -27,6 +29,7 @@ class TightBindingModel{
                     B_ = A_.inverse().transpose()* 2 * std::numbers::pi; 
     				std::vector<Eigen::Vector3d> pos(norb(), Eigen::Vector3d::Zero());
 					tau_ = pos;
+					assert(test_rec_lat(A_, B_));
 				}
 
 		int norb() const {
@@ -44,6 +47,7 @@ class TightBindingModel{
 			r_hops = r_hoppings;
 		}
 		Eigen::MatrixXcd get_Hk(const Eigen::Vector3d& k, bool cell_gauge) const;
+		std::array<Eigen::MatrixXcd,3> get_Hk_deriv(const Eigen::Vector3d& k, bool cell_gauge) const;
 		// void velocity(const Eigen::Vector3d& k, int alpha, Eigen::MatrixXcd& dH);
 		static TightBindingModel from_file(const std::string& path);
         Eigen::Matrix3d get_rec_lat(){return B_;};
@@ -68,9 +72,8 @@ class TightBindingModel{
 };
 
 std::vector<Eigen::VectorXd> calculate_bands(std::vector<Eigen::Vector3d> kfrac, TightBindingModel model, bool cell_gauge);
-
-
-
+std::vector<double> energy_range(std::vector<Eigen::VectorXd> eigvals, int n_energies = 1000);
+std::vector<double> calculate_dos(const std::vector<Eigen::VectorXd>& eigvals, const std::vector<double>& energy_au, double broadening_au);
 
 
 

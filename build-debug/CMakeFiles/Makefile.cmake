@@ -56,5 +56,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/tb.dir/DependInfo.cmake"
   "CMakeFiles/bands_along_path.dir/DependInfo.cmake"
+  "CMakeFiles/dos_on_grid.dir/DependInfo.cmake"
   "CMakeFiles/tests.dir/DependInfo.cmake"
   )

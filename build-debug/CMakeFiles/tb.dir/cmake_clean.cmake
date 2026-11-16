@@ -1,6 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/tb.dir/src/dos.cpp.o"
-  "CMakeFiles/tb.dir/src/dos.cpp.o.d"
   "CMakeFiles/tb.dir/src/model.cpp.o"
   "CMakeFiles/tb.dir/src/model.cpp.o.d"
   "CMakeFiles/tb.dir/src/read_and_write.cpp.o"

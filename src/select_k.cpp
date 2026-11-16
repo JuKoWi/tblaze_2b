@@ -1,8 +1,8 @@
 #include <vector>
 #include <Eigen/Dense>
 
-// generate Monkhorst Pack grid in fractional coordinates
-std::vector<Eigen::Vector3d> generate_mp_grid_frac(int nx, int ny, int nz){
+//generate a gamma-centered uniform grid
+std::vector<Eigen::Vector3d> gamma_grid(int nx, int ny, int nz){
 	std::vector<Eigen::Vector3d> grid {};
 	for (int i = 0; i<nx; i++){
 		for (int j = 0; j<ny; j++){
@@ -37,3 +37,18 @@ std::vector<Eigen::Vector3d> generate_path_frac(std::vector<Eigen::Vector3d> sym
 }
 
 	
+std::vector<Eigen::Vector3d> mp_grid(int nx, int ny, int nz){
+	std::vector<Eigen::Vector3d> grid {};
+	for (int i = 0; i<nx; i++){
+		for (int j = 0; j<ny; j++){
+			for (int k=0; k<nz; k++){
+				double kx {(static_cast<double>(i) + (1 - nx)/2.0)/nx};
+				double ky {(static_cast<double>(j) + (1 - ny)/2.0)/ny};
+				double kz {(static_cast<double>(k) + (1 - nz)/2.0)/nz};
+				Eigen::Vector3d kpoint {kx, ky, kz};
+				grid.push_back(kpoint);
+			}
+		}
+	}
+	return grid;
+}
