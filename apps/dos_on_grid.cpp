@@ -7,11 +7,14 @@
 
 
 int main(){
-	auto k_grid {gamma_grid(100,100,1)};
 
 	std::string fname {};
 	std::cout << "Waiting for seedname filename" << '\n';
 	std::cin >> fname;
+	int nx, ny, nz;
+	std::cout << "Waiting for grid parameters: " << '\n';
+	std::cin >> nx >> ny >> nz;
+	auto k_grid {gamma_grid(nx,ny,nz)};
 	auto tb = from_seedname(fname);
 	std::cout << "Lattice in angstrom: " << '\n';
 	std::cout << tb.get_lattice()/Constants::ANGSTROM_TO_BOHR << std::endl;
@@ -23,9 +26,10 @@ int main(){
 	for (auto& p: tb.get_lat_points()){
 		std::cout << p.transpose() << '\n';
 	}
-	std::vector<Eigen::VectorXd> bands {calculate_bands(k_grid, tb, true)};
-	std::vector<double> e_range {energy_range(bands)};
-	int n_k = int(k_grid.size());
-	std::vector<double> dos {calculate_dos(bands, e_range, 0.001)};
+	KGridQuantity<Eigen::VectorXd> bands {calculate_bands(k_grid, tb, true)};
+	std::vector<double> e_range {get_energy_range(bands)};
+	int n_k = int(k_grid.data.size());
+	// Eigen::MatrixXd dos {calculate_gauss_dos(bands, e_range, 0.005)};
+	Eigen::MatrixXd dos {calculate_tetra_dos(bands, e_range, tb.get_rec_lat())};
 	write_dos(e_range, dos);
 }

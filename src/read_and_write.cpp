@@ -4,30 +4,31 @@
 #include <tb/model.h>
 #include <tb/read_and_write.h>
 #include <tb/utils.h>
+#include <tb/select_k.h>
 #include <string>
 #include <cmath>
 #include <sstream>
 
-void write_bands_path(std::vector<Eigen::Vector3d> kfrac, std::vector<Eigen::VectorXd> eigvals){
-    if (kfrac.size() != eigvals.size()){
+void write_bands_path(KGridQuantity<Eigen::Vector3d> kfrac, KGridQuantity<Eigen::VectorXd> eigvals){
+    if (kfrac.data.size() != eigvals.data.size()){
         throw std::invalid_argument("Only one set of eigenvalues per k-point allowed");
     }
     std::vector<Eigen::VectorXd> eigvals_eV {};
-    for (auto v: eigvals){
+    for (auto v: eigvals.data){
         eigvals_eV.push_back(v * Constants::HARTREE_TO_EV);
     }
     std::ofstream resultfile("bands.txt");
     if (resultfile.is_open()){
-        for (std::size_t i=0; i<kfrac.size(); i++){
-            resultfile << kfrac[i].transpose() << '\t' << eigvals_eV[i].transpose() << '\n';
+        for (std::size_t i=0; i<kfrac.data.size(); i++){
+            resultfile << kfrac.data[i].transpose() << '\t' << eigvals_eV[i].transpose() << '\n';
         } 
         resultfile.close();
     }
     std::cout << "Finished writing bandfile" << '\n';
 }
 
-void write_dos(std::vector<double> E_au, std::vector<double> dos){
-    if (E_au.size() != dos.size()){
+void write_dos(std::vector<double> E_au, Eigen::MatrixXd dos){
+    if (E_au.size() != dos.rows()){
         throw std::invalid_argument("Size of energy and DOS do not match");
     }
     std::vector<double> E_eV {};
@@ -37,11 +38,11 @@ void write_dos(std::vector<double> E_au, std::vector<double> dos){
     std::ofstream resultfile("dos.txt");
     if (resultfile.is_open()){
         for (std::size_t i=0; i<E_eV.size(); i++){
-            resultfile << E_eV[i] << '\t' << dos[i] << '\n';
+            resultfile << E_eV[i] << '\t' << dos.row(i)/Constants::HARTREE_TO_EV << '\n';
         } 
         resultfile.close();
     }
-    std::cout << "Finished writing DOS.txt " << '\n';
+    std::cout << "Finished writing dos.txt " << '\n';
 }
 
 std::istringstream read_line(std::ifstream& infile){

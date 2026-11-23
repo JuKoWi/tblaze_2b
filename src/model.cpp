@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <numbers>
 #include <tb/model.h>
+#include <tb/select_k.h>
 #include <cmath>
 #include <complex>
 #include <limits>
@@ -64,22 +65,23 @@ bool test_rec_lat(Eigen::Matrix3d lat, Eigen::Matrix3d rec_lat){
     return result.isApprox(2 * std::numbers::pi * Eigen::Matrix3d::Identity());
 }
 
-std::vector<Eigen::VectorXd> calculate_bands(std::vector<Eigen::Vector3d> kfrac, TightBindingModel model, bool cell_gauge){
+KGridQuantity<Eigen::VectorXd> calculate_bands(KGridQuantity<Eigen::Vector3d>& kfrac, TightBindingModel model, bool cell_gauge){
     std::cout << "Calculate Bands" << std::endl;
-    std::vector<Eigen::VectorXd> eigvals {};
-    for (const auto& k: kfrac){
-        Eigen::MatrixXcd Hk {model.get_Hk(k, cell_gauge)};
+    KGridQuantity<Eigen::VectorXd> eigvals(kfrac.nx, kfrac.ny, kfrac.nz);
+    #pragma omp parallel for schedule(static)
+    for (std::size_t i=0; i<kfrac.data.size(); ++i){
+        Eigen::MatrixXcd Hk {model.get_Hk(kfrac.data[i], cell_gauge)};
         Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hk);
-        eigvals.push_back(es.eigenvalues());
+        eigvals.data[i] = es.eigenvalues();
     }
     return eigvals;
 }
 
-std::vector<double> energy_range(std::vector<Eigen::VectorXd> eigvals, int n_energies){
+std::vector<double> get_energy_range(KGridQuantity<Eigen::VectorXd> eigvals, int n_energies){
     std::vector<double> energy_au(n_energies, 0.0);
     double emax = -std::numeric_limits<double>::infinity();
     double emin = std::numeric_limits<double>::infinity();
-    for (const auto v: eigvals){
+    for (const auto v: eigvals.data){
         emin = std::min(emin, v.minCoeff());
         emax = std::max(emax, v.maxCoeff());
     }
@@ -92,18 +94,143 @@ std::vector<double> energy_range(std::vector<Eigen::VectorXd> eigvals, int n_ene
     return energy_au;
 }
 
-std::vector<double> calculate_dos(const std::vector<Eigen::VectorXd>& eigvals, const std::vector<double>& energy_au, double broadening_au){
-    std::cout<< "Calculate DOS" << std::endl;
-    int n_k = static_cast<int>(eigvals.size());
-    int n_bands = eigvals[0].size();
-    std::vector<double> dos(energy_au.size(), 0.0);
+// density of states per unit cell
+Eigen::MatrixXd calculate_gauss_dos(const KGridQuantity<Eigen::VectorXd>& eigvals, const std::vector<double>& erange_au, double broadening_au){
+    std::cout<< "Calculate DOS" << '\n';
+    int n_k = static_cast<int>(eigvals.data.size());
+    int n_bands = eigvals.data[0].size();
+    int n_e = static_cast<int>(erange_au.size());
+    Eigen::MatrixXd dos {Eigen::MatrixXd::Zero(n_e, n_bands)};
     double norm_const {2.0/(n_k * broadening_au * std::sqrt(2 * std::numbers::pi))};
-    for (std::size_t i =0; i < energy_au.size(); i++){
+    std::cout << "Number of k-points: " << '\n';
+    std::cout << n_k << '\n';
+    #pragma omp parallel for schedule(static)
+    for (int i =0; i < n_e; i++){
         for (int j =0; j < n_k; j++){
             for (int k=0; k < n_bands; k++){
-                dos[i] += norm_const * std::exp(-0.5 * std::pow((energy_au[i] - eigvals[j](k))/broadening_au, 2));
+                dos(i, k) += norm_const * std::exp(-0.5 * std::pow((erange_au[i] - eigvals.data[j](k))/broadening_au, 2));
             }
         }
     }
     return dos;
 }
+
+Eigen::MatrixXd calculate_tetra_dos(const KGridQuantity<Eigen::VectorXd>& eigvals, const std::vector<double>& erange_au, const Eigen::MatrixXd& rec_lat){
+    std::cout << "Calculate DOS" << '\n';
+    int n_bands = eigvals.data[0].size();
+    int n_e = static_cast<int>(erange_au.size());
+    Eigen::MatrixXd dos {Eigen::MatrixXd::Zero(n_e, n_bands)};
+    std::vector<int> single_points {
+        (eigvals.nx == 1) ? 0 : 1,
+        (eigvals.ny == 1) ? 0 : 1,
+        (eigvals.nz == 1) ? 0 : 1,
+    };
+    int dimension {0};
+    for (auto i: single_points){
+        dimension += i;
+    }
+    if (dimension == 3){
+        std::cout << "Applying 3D lattice tetrahedron method" << '\n';
+        std::vector<Eigen::Vector3i> corners {
+            {0, 0, 0}, // 0
+            {1, 0, 0}, // 1
+            {0, 1, 0}, // 2
+            {1, 1, 0}, // 3
+            {0, 0, 1}, // 4
+            {1, 0, 1}, // 5
+            {0, 1, 1}, // 6
+            {1, 1, 1}, // 7
+        };
+        std::vector<std::vector<int>> tetrahedra {
+            {0, 1, 2, 5},
+            {0, 2, 4, 5},
+            {1, 2, 3, 5},
+            {2, 3, 5, 7},
+            {2, 5, 6, 7},
+            {2, 4, 5, 6},
+        };
+        double volume_bz {rec_lat.determinant()};
+        double volume_tetrahedron {volume_bz /(6.0 * eigvals.nx * eigvals.ny * eigvals.nz)};//assume uniformly spaced grid points
+        double prefactor {6 * volume_tetrahedron/ volume_bz};
+        #pragma omp parallel for schedule(static)
+        for (int ie=0; ie < n_e; ie++){
+            for (int i=0; i<eigvals.nx; i++){
+                for (int j=0; j<eigvals.ny; j++){
+                    for (int k=0; k<eigvals.nz; k++){
+                        for (auto t: tetrahedra){
+                            for (int b=0; b<n_bands; b++){
+                                std::vector<double> e_c {}; // energies at corners
+                                for (auto c: t){
+                                    e_c.push_back(eigvals((i+corners[c](0)) % eigvals.nx, (j+corners[c](1)) % eigvals.ny, (k+corners[c](2)) % eigvals.nz)(b));
+                                }
+                                std::ranges::sort(e_c);
+                                if (e_c[0]<= erange_au[ie] && erange_au[ie] < e_c[1]){
+                                    dos(ie, b) += prefactor * std::pow(erange_au[ie] - e_c[0], 2) / ((e_c[1] - e_c[0]) * (e_c[2] - e_c[0])* (e_c[3] - e_c[0]));
+                                }
+                                else if (e_c[1] <= erange_au[ie] && erange_au[ie] < e_c[2]){
+                                    dos(ie, b) += prefactor * (e_c[1] - e_c[0] + 2 * (erange_au[ie] - e_c[1]) - (e_c[2] - e_c[0] + e_c[3] - e_c[1])*std::pow(erange_au[ie] - e_c[1], 2)/((e_c[2] - e_c[1]) * (e_c[3] - e_c[1])))/((e_c[2] - e_c[0]) * (e_c[3] - e_c[0]));
+                                }
+                                else if (e_c[2] <= erange_au[ie] && erange_au[ie] < e_c[3]){
+                                    dos(ie, b) += prefactor * std::pow(e_c[3] - erange_au[ie], 2) / ((e_c[3] - e_c[0]) * (e_c[3] - e_c[1]) * (e_c[3] - e_c[2]));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return dos;
+    }
+    else if (dimension == 2){
+        std::cout << "Applying 2D lattice tetrahedron method" << '\n';
+        std::vector<Eigen::Vector3i> corners {
+            {0, 0, 0}, // 0
+            {1, 0, 0}, // 1
+            {0, 1, 0}, // 2
+            {1, 1, 0}, // 3
+        };
+        std::vector<std::vector<int>> triangles {
+            {0, 1, 3},
+            {0, 2, 3},
+        };
+        double volume_bz {rec_lat.topLeftCorner<2,2>().determinant()};
+        double volume_tetrahedron {volume_bz * 0.5/(eigvals.nx * eigvals.ny)};//assume uniformly spaced grid points
+        double prefactor {4 * volume_tetrahedron/ volume_bz};
+        #pragma omp parallel for schedule(static)
+        for (int ie=0; ie < n_e; ie++){
+            for (int i=0; i<eigvals.nx; i++){
+                for (int j=0; j<eigvals.ny; j++){
+                    for (auto t: triangles){
+                        for (int b=0; b<n_bands; b++){
+                            std::vector<double> e_vertices {};
+                            for (auto c: t){
+                                e_vertices.push_back(eigvals((i+corners[c](0)) % eigvals.nx, (j+corners[c](1)) % eigvals.ny, 0)(b));
+                            }
+                            std::ranges::sort(e_vertices);
+                            if (e_vertices[0]<= erange_au[ie] && erange_au[ie] < e_vertices[1]){
+                                dos(ie, b) += prefactor * (erange_au[ie] - e_vertices[0])/((e_vertices[1] - e_vertices[0]) * (e_vertices[2] - e_vertices[0]));
+                            }
+                            else if (e_vertices[1] <= erange_au[ie] && erange_au[ie] < e_vertices[2]){
+                                dos(ie, b) += prefactor * (erange_au[ie] - e_vertices[2])/((e_vertices[1] - e_vertices[2]) * (e_vertices[2] - e_vertices[0]));
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+        return dos;
+    }
+    else if (dimension == 1){
+        std::cout << "Applying 3D lattice tetrahedron method" << '\n';
+        std::cout << "Not implemented yet" << '\n';
+        return dos;
+    }
+    else if (dimension == 0){
+        std::cout << "Calculating DOS of nonperiodic system" << '\n';
+        std::cout << "Not implemented yet" << '\n';
+        return dos;
+    }
+    return dos;
+}
+

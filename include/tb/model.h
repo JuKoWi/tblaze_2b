@@ -2,6 +2,7 @@
 #include <Eigen/Dense>
 #include <iostream>
 #include <algorithm>
+#include <tb/select_k.h>
 
 using cplx = std::complex<double>;
 
@@ -71,9 +72,10 @@ class TightBindingModel{
 		Eigen::Matrix3d B_ {}; // rec lattice vectors, vectors as rows
 };
 
-std::vector<Eigen::VectorXd> calculate_bands(std::vector<Eigen::Vector3d> kfrac, TightBindingModel model, bool cell_gauge);
-std::vector<double> energy_range(std::vector<Eigen::VectorXd> eigvals, int n_energies = 1000);
-std::vector<double> calculate_dos(const std::vector<Eigen::VectorXd>& eigvals, const std::vector<double>& energy_au, double broadening_au);
+KGridQuantity<Eigen::VectorXd> calculate_bands(KGridQuantity<Eigen::Vector3d>& kfrac, TightBindingModel model, bool cell_gauge);
+std::vector<double> get_energy_range(KGridQuantity<Eigen::VectorXd> eigvals, int n_energies = 1000);
+Eigen::MatrixXd calculate_gauss_dos(const KGridQuantity<Eigen::VectorXd>& eigvals, const std::vector<double>& e_range_au, double broadening_au);
+Eigen::MatrixXd calculate_tetra_dos(const KGridQuantity<Eigen::VectorXd>& eigvals, const std::vector<double>& erange_au, const Eigen::MatrixXd& rec_lat);
 
 
 

@@ -26,6 +26,6 @@ int main(){
 	for (auto& p: tb.get_lat_points()){
 		std::cout << p.transpose() << '\n';
 	}
-	std::vector<Eigen::VectorXd> bands_w90 {calculate_bands(path, tb, true)};
+	KGridQuantity<Eigen::VectorXd> bands_w90 {calculate_bands(path, tb, true)};
 	write_bands_path(path, bands_w90);
 }
