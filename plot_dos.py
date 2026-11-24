@@ -28,12 +28,15 @@ def dos_analytic(E, t=1.0):
     return rho
 
 
-data = np.loadtxt('dos.txt')
+data = np.loadtxt('dos_nonorth.txt')
 #for i in range(1, np.shape(data)[1]):
 #    plt.plot(data[:,0], data[:,i], label='centered')
 plt.plot(data[:,0], np.sum(data[:,1:], axis=1))
 #plt.plot(data[:,0], dos_analytic(data[:,0], t=2.8), label='analytic')
+data1 = np.loadtxt('dos_orth.txt')
+plt.plot(data1[:,0], np.sum(data1[:,1:], axis=1))
 plt.legend()
 plt.show()
 print(simpson(data[:,1], data[:,0]))
+print(simpson(data1[:,1], data1[:,0]))
 

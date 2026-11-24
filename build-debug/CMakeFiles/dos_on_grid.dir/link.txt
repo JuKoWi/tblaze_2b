@@ -1,1 +1,1 @@
-/usr/bin/c++ -fsanitize=address,undefined -g -Wl,--dependency-file=CMakeFiles/dos_on_grid.dir/link.d CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.o -o dos_on_grid  libtb.a /usr/lib/gcc/x86_64-redhat-linux/16/libgomp.so /usr/lib64/libpthread.a
+/usr/bin/c++ -g -Wl,--dependency-file=CMakeFiles/dos_on_grid.dir/link.d CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.o -o dos_on_grid  libtb.a /usr/lib/gcc/x86_64-redhat-linux/16/libgomp.so /usr/lib64/libpthread.a

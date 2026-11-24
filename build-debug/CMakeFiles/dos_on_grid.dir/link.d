@@ -2,11 +2,6 @@ dos_on_grid: \
   /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crt1.o \
   /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/crti.o \
   /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libasan_preinit.o \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libasan.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libasan.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libasan.so \
-  /usr/lib64/libasan.so.8.0.0 \
   CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.o \
   libtb.a \
   /usr/lib/gcc/x86_64-redhat-linux/16/libgomp.so \
@@ -17,10 +12,6 @@ dos_on_grid: \
   /usr/lib/gcc/x86_64-redhat-linux/16/../../../../lib64/libm.so \
   /lib64/libm.so.6 \
   /lib64/libmvec.so.1 \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so \
-  /usr/lib64/libubsan.so.1.0.0 \
   /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so \
   /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so \
   /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so \
@@ -56,16 +47,6 @@ dos_on_grid: \
 
 /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libasan_preinit.o:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libasan.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libasan.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libasan.so:
-
-/usr/lib64/libasan.so.8.0.0:
-
 CMakeFiles/dos_on_grid.dir/apps/dos_on_grid.cpp.o:
 
 libtb.a:
@@ -85,14 +66,6 @@ libtb.a:
 /lib64/libm.so.6:
 
 /lib64/libmvec.so.1:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/libubsan.so:
-
-/usr/lib64/libubsan.so.1.0.0:
 
 /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so:
 

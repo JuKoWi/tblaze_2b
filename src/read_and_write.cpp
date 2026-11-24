@@ -84,20 +84,40 @@ TightBindingModel from_seedname(std::string fname){
     // read_line(infile);
     std::vector<Eigen::Vector3i> lat_points {};
     std::vector<Hopping> hoppingsH {};
+    std::vector<Hopping> hoppingsS {};
     std::vector<HoppingVec> hoppings_r {};
+    bool orthogonal {};
     for (int i=0; i < n_latpoints; ++i){
         Eigen::Vector3i R {}; 
         auto iss {read_line(infile)};
         iss >> R(0) >> R(1) >> R(2);
         for (int j=0; j < std::pow(norbs,2); ++j){
-            int m,n;
-            double ReH, ImH;
+            std::vector<double> row {};
+            double v {};
             auto iss {read_line(infile)};
-            iss >> m >> n >> ReH >> ImH;
+            while (iss >> v){
+                row.push_back(v);
+            }
+            if (j == 0){
+                orthogonal = (row.size() == 4 ? true : false);
+            }
+            if (orthogonal != (row.size() == 4 ? true : false)){
+                throw std::runtime_error("Inconstant number of rows at H/S block");
+            }
+            int m = static_cast<int>(row[0]);
+            int n = static_cast<int>(row[1]);
+            double ReH = row[2];
+            double ImH = row[3];
             if (m - 1 < 0 || m - 1 >= norbs || n - 1 < 0 || n - 1 >= norbs) {
                 throw std::runtime_error("Error parsing orbital indices");
             }
             hoppingsH.push_back({m-1, n-1, R, cplx(ReH/Constants::HARTREE_TO_EV, ImH/Constants::HARTREE_TO_EV)/double(degeneracies[i])});
+            if (!orthogonal){
+                double ReS = row[4];
+                double ImS = row[5];
+                hoppingsS.push_back({m-1, n-1, R, cplx(ReS, ImH/double(degeneracies[i]))});
+            }
+
         }
         infile >> std::ws;
     }
@@ -115,8 +135,11 @@ TightBindingModel from_seedname(std::string fname){
         }
         infile >> std::ws;
     }
-    TightBindingModel model(lattice, hoppingsH);
+    TightBindingModel model(lattice, hoppingsH, true);
     model.set_r_hoppings(hoppings_r);
+    if (!orthogonal){
+        model.set_overlap(hoppingsS);
+    }
     std::cout << "Finished reading seedname" << std::endl;
     return model;
 }

@@ -14,27 +14,37 @@
 using namespace std::complex_literals;
 using cplx = std::complex<double>;
 
-Eigen::MatrixXcd TightBindingModel::get_Hk(const Eigen::Vector3d& k, bool cell_gauge) const {
-    Eigen::MatrixXcd H_k {Eigen::MatrixXcd::Zero(norb(), norb())};
+int norb(const std::vector<Hopping>& hops){
+	int max = 0;
+	for (auto h: hops){
+		max = std::max(std::max(h.i, h.j), max);
+	}
+	return max + 1;
+}
+
+Eigen::MatrixXcd TightBindingModel::ft_to_k(const std::vector<Hopping>& hops, const Eigen::Vector3d& k, bool cell_gauge)const{
+    Eigen::MatrixXcd M_k {Eigen::MatrixXcd::Zero(get_dimension(), get_dimension())};
     if (cell_gauge){
-        for (const auto& h: H_hops){
-            H_k(h.i, h.j) += std::exp(1i* 2.0 * std::numbers::pi * h.R.cast<double>().dot(k)) * h.t;
+        for (const auto& h: hops){
+            M_k(h.i, h.j) += std::exp(1i* 2.0 * std::numbers::pi * h.R.cast<double>().dot(k)) * h.t;
         }
     }
     else{
         const Eigen::Vector3d rec_lat_cart {B_.transpose() * k};
-        for (const auto& h: H_hops){
+        for (const auto& h: hops){
             const Eigen::Vector3d lat_cart {A_.transpose() * h.R.cast<double>()};
             const Eigen::Vector3d d {lat_cart + tau_[h.j] - tau_[h.i]};
-            H_k(h.i, h.j) += std::exp(1i* rec_lat_cart.dot(d)) * h.t;
+            M_k(h.i, h.j) += std::exp(1i* rec_lat_cart.dot(d)) * h.t;
         }
     }
-    double herm_delta {(H_k - H_k.adjoint()).cwiseAbs().maxCoeff()};
-    if (herm_delta > 1e-14){
-        std::cout << "Hamiltonian not hermitian: ";
-        std::cout << herm_delta << '\n';
-    }
-    return H_k;
+    #ifndef NDEBUG
+        double herm_delta {(M_k - M_k.adjoint()).cwiseAbs().maxCoeff()};
+        if (herm_delta > 1e-14){
+            std::cout << "Matrix not hermitian: ";
+            std::cout << herm_delta << '\n';
+        }
+    #endif
+    return M_k;
 }
 
 std::array<Eigen::MatrixXcd,3> TightBindingModel::get_Hk_deriv(const Eigen::Vector3d& k, bool cell_gauge) const {
@@ -65,14 +75,21 @@ bool test_rec_lat(Eigen::Matrix3d lat, Eigen::Matrix3d rec_lat){
     return result.isApprox(2 * std::numbers::pi * Eigen::Matrix3d::Identity());
 }
 
-KGridQuantity<Eigen::VectorXd> calculate_bands(KGridQuantity<Eigen::Vector3d>& kfrac, TightBindingModel model, bool cell_gauge){
+KGridQuantity<Eigen::VectorXd> calculate_bands(KGridQuantity<Eigen::Vector3d>& kfrac, const TightBindingModel& model, bool cell_gauge){
     std::cout << "Calculate Bands" << std::endl;
     KGridQuantity<Eigen::VectorXd> eigvals(kfrac.nx, kfrac.ny, kfrac.nz);
     #pragma omp parallel for schedule(static)
     for (std::size_t i=0; i<kfrac.data.size(); ++i){
-        Eigen::MatrixXcd Hk {model.get_Hk(kfrac.data[i], cell_gauge)};
-        Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hk);
-        eigvals.data[i] = es.eigenvalues();
+        Eigen::MatrixXcd Hk {model.ft_to_k(model.get_H_hops(), kfrac.data[i], cell_gauge)};
+        if (model.is_orthogonal()){
+            Eigen::SelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hk);
+            eigvals.data[i] = es.eigenvalues();
+        }
+        else{
+            Eigen::MatrixXcd Sk {model.ft_to_k(model.get_S_hops(), kfrac.data[i], cell_gauge)};
+            Eigen::GeneralizedSelfAdjointEigenSolver<Eigen::MatrixXcd> es(Hk, Sk);
+            eigvals.data[i] = es.eigenvalues();
+        }
     }
     return eigvals;
 }
@@ -222,7 +239,7 @@ Eigen::MatrixXd calculate_tetra_dos(const KGridQuantity<Eigen::VectorXd>& eigval
         return dos;
     }
     else if (dimension == 1){
-        std::cout << "Applying 3D lattice tetrahedron method" << '\n';
+        std::cout << "Applying 1D lattice tetrahedron method" << '\n';
         std::cout << "Not implemented yet" << '\n';
         return dos;
     }

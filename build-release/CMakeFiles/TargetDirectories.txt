@@ -1,0 +1,7 @@
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/tb.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/bands_along_path.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/dos_on_grid.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/tests.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/test.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/edit_cache.dir
+/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/build-release/CMakeFiles/rebuild_cache.dir

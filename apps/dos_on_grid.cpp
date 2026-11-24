@@ -21,7 +21,7 @@ int main(){
 	std::cout << "Reciprocal lattice: " << '\n';
 	std::cout << tb.get_rec_lat()  << std::endl;
 	std::cout << "Dimension: " << '\n';
-	std::cout << tb.norb() << '\n';
+	std::cout << tb.get_dimension() << '\n';
 	std::cout << "Lattice points: " << '\n';
 	for (auto& p: tb.get_lat_points()){
 		std::cout << p.transpose() << '\n';

@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/juliuswillrich/programming/medium_practice_projects/tblaze_2b/include -isystem /usr/include/eigen3
 
-CXX_FLAGS = -fsanitize=address,undefined -g -std=gnu++20 -fopenmp
+CXX_FLAGS = -g -std=gnu++20 -fopenmp
 
